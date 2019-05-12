@@ -87,7 +87,8 @@ public class Compresor {
 	private void descomprimir() {
 		String imagen = this.imagenComprimida.getColores();
 		String nuevaImagen = "";
-		int i = 0, longitud = imagen.length();
+		String numero="";
+		int i = 0, longitud = imagen.length(), inicio=0;
 		char letraActual = 0;
 		char letraRepetida = 0;
 		int repeticiones = 0;
@@ -97,10 +98,14 @@ public class Compresor {
 				repeticiones = 0;
 				letraRepetida = imagen.charAt(++i);
 				letraActual = imagen.charAt(++i);
+				inicio = i;
 				while( letraActual != ')' ) {
 					repeticiones++;
 					letraActual = imagen.charAt(++i);
 				}
+				repeticiones+=inicio;
+				numero = imagen.substring(inicio,repeticiones);
+				repeticiones = Integer.parseInt(numero);
 				for (int j=0; j<repeticiones; j++) {
 					nuevaImagen += letraRepetida;
 				}
@@ -123,7 +128,7 @@ public class Compresor {
 		PrintWriter salida = new PrintWriter(new FileWriter("imagenes.out"));
 		salida.println(compresor.getImagenDescomprimida());
 		salida.println(compresor.getImagenComprimida());
-		salida.println();
+		salida.close();
 	}
 	
 }
